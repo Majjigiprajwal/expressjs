@@ -1,14 +1,18 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
+const adminRoute = require('./routes/admin');
+const shopRoute = require('./routes/shop');
 
 const app = express();
 
-app.use((req,res,next)=>{
-     console.log('middleware')
-     next();
-})
-app.use((req,res,next)=>{
-    console.log('Another middleware')
-    res.send(`<h1>This is Express JS Server</h1>`)
+app.use(bodyParser.urlencoded())
+
+app.use(adminRoute);
+app.use(shopRoute)
+
+app.use("/",(req,res,next)=>{
+    res.status(404).send(`<h1>Page Not Found</h1>`)
 })
 
 
